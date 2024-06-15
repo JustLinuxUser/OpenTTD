@@ -626,6 +626,13 @@ STR_GRAPH_CARGO_TOOLTIP_DISABLE_ALL                             :{BLACK}Display 
 STR_GRAPH_CARGO_PAYMENT_TOGGLE_CARGO                            :{BLACK}Toggle graph for cargo type on/off
 STR_GRAPH_CARGO_PAYMENT_CARGO                                   :{TINY_FONT}{BLACK}{STRING}
 
+STR_SELECTOR_WIDGET_ENABLE_ALL                                  :{BLACK}Show all
+STR_SELECTOR_WIDGET_DISABLE_ALL                                 :{BLACK}Hide all
+STR_SELECTOR_WIDGET_TOGGLE_SELECTED                             :{BLACK}Toggle selected
+STR_SELECTOR_WIDGET_TOOLTIP_ENABLE_ALL                          :{BLACK}Make all the items in the list visible
+STR_SELECTOR_WIDGET_TOOLTIP_DISABLE_ALL                         :{BLACK}Make all the items in the list invisible
+STR_SELECTOR_WIDGET_TOOLTIP_TOGGLE_SELECTED                     :{BLACK}Toggle the visibility of the selected item
+
 STR_GRAPH_PERFORMANCE_DETAIL_TOOLTIP                            :{BLACK}Show detailed performance ratings
 
 # Graph key window
