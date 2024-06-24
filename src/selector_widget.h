@@ -22,8 +22,8 @@
 class SelectorWidget {
 public:
 	/**
-	 * This struct is like a config file for a utility,
-	 * it makes the selector widget configurable and extencible.
+	 * This struct is like a configuration file for a utility,
+	 * it makes the selector widget configurable and extensible.
 	 * In it's current form it stores function pointers to functions
 	 * that rebuild the lists and draw individual items in the matrix widget
 	 */
@@ -58,7 +58,7 @@ public:
 private:
 	/**
 	 * This enum stores the WidgetIDs of all the widgets that belong to this selector widget.
-	 * It starts at a very high value, not to interfear with other widgets of the parrent window
+	 * It starts at a very high value, not to interfere with other widgets of the parent window
 	 */
 	enum InternalWidgets {
 		WID_SELECTOR_MATRIX = 42069,
@@ -71,7 +71,7 @@ private:
 
 	Profile profile; ///< currently selected profile
 
-	Window *w; ///< The parrent window pointer
+	Window *w; ///< The parent window pointer
 
 	int row_height; ///< The height of 1 row in the WID_SELECTOR_MATRIX widget
 

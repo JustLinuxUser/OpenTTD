@@ -327,7 +327,7 @@ protected:
 		uint linewidth = _settings_client.gui.graph_line_thickness;
 		uint pointoffs1 = (linewidth + 1) / 2;
 		uint pointoffs2 = linewidth + 1 - pointoffs1;
-		/* The minimal (Manhatton) distance between the last click coord and all of the data points in the current plot */
+		/* The minimal (Manhattan) distance between the last click coordinate and all of the data points in the current plot */
 		uint min_dist = UINT_MAX;
 		if (this->selector->shown[id]) {
 			/* Centre the dot between the grid lines. */
@@ -343,7 +343,7 @@ protected:
 				if (datapoint != INVALID_DATAPOINT) {
 					/*
 					 * Check whether we need to reduce the 'accuracy' of the
-					 * datapoint value and the highest value to split overflows.
+					 * data point value and the highest value to split overflows.
 					 * And when 'drawing' 'one million' or 'one million and one'
 					 * there is no significant difference, so the least
 					 * significant bits can just be removed.
@@ -363,7 +363,7 @@ protected:
 					}
 					y = r.top + x_axis_offset - ((r.bottom - r.top) * datapoint) / (interval_size >> reduce_range);
 
-					/* Determine the minimal (Manhatton) distance between the click and the data points */
+					/* Determine the minimal (Manhattan) distance between the click and the data points */
 					if (click.has_value()) {
 						const Point click_pt = click.value();
 						const uint dist = abs(click_pt.x - x) + abs(click_pt.y - y);
@@ -400,7 +400,7 @@ protected:
 	/**
 	 * Actually draw the graph.
 	 * @param r the rectangle of the data field of the graph
-	 * Right after a click 1 draw call is "sacraficed" to determine the new selected id (plot)
+	 * Right after a click 1 draw call is "sacrificed" to determine the new selected id (plot)
 	 */
 	void DrawGraph(Rect r) const
 	{
@@ -544,7 +544,7 @@ protected:
 				continue;
 			}
 			uint res = DrawLineAndDots(id, r, x_sep, x_axis_offset, interval_size, 0);
-			/* Determine the line with the closest datapoint to the click (if exists) */
+			/* Determine the line with the closest data point to the click (if exists) */
 			if (res < min_dist) {
 				min_dist = res;
 				min_id = id;
@@ -554,7 +554,7 @@ protected:
 		/* If the distance between the closest data point and the click is small enough, change the selection */
 		if (min_dist < 20) {
 			this->selector->selected_id = min_id;
-			/* One draw call is sacrafised right after a click, if the selection is determined to change */
+			/* One draw call is sacrificed right after a click, if the selection is determined to change */
 			InvalidateWindowData(this->window_class, this->window_number);
 			InvalidateWindowData(WC_GRAPH_LEGEND, 0);
 			InvalidateWindowData(WC_GRAPH_LEGEND, 1);

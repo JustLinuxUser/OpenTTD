@@ -20,7 +20,7 @@
 
 /**
  * Create a new NWidgetBase with all the widgets needed by the SelectorWidget widget
- * This function is made to be passed in NWidgetFunction, when creating UI for a parrent window
+ * This function is made to be passed in NWidgetFunction, when creating UI for a parent window
  * @see NWidgetFunction
  */
 std::unique_ptr<NWidgetBase> SelectorWidget::MakeSelectorWidgetUI() {
@@ -59,9 +59,9 @@ std::unique_ptr<NWidgetBase> SelectorWidget::MakeSelectorWidgetUI() {
 
 /**
  * Selector widget initialization function
- * This function is ment to be called after CreateNestedTree() of the window
+ * This function is meant to be called after CreateNestedTree() of the window
  *
- * @param w The parrent window of this widget
+ * @param w The parent window of this widget
  *
  * @see SelectorWidget::post_init()
  */
@@ -78,7 +78,7 @@ void SelectorWidget::Init(Window* w)
 
 /**
  * Selector widget profile selection function
- * This function is ment to be called before CreateNestedTree() of the window
+ * This function is meant to be called before CreateNestedTree() of the window
  *
  * @param p The "profile" the selector widget should use
  *
@@ -95,14 +95,14 @@ void SelectorWidget::PreInit(Profile p)
 
 /**
  * Selector widget's OnClick event handler
- * This function is ment to be called from the parrent's window's OnClick
+ * This function is meant to be called from the parent's window's OnClick
  * Event handler
  *
  * @param pt The click coordinate
  * @param widget The id of the targeted widget
  * @param click_count The number of clicks
  *
- * All of theese parameters should be passed straight from the parrent's window's OnClick
+ * All of these parameters should be passed straight from the parent's window's OnClick
  * Event handler, without any changes, or conditional checks
  *
  * @see Window::OnClick()
@@ -138,13 +138,13 @@ void SelectorWidget::OnClick(Point pt, WidgetID widget, int click_count)
 
 /**
  * Selector widget's OnInvalidateData event handler
- * This function is ment to be called from the parrent's window's OnInvalidateData
+ * This function is meant to be called from the parent's window's OnInvalidateData
  * Event handler
  *
  * @param data Information about the changed data.
  * @param gui_scope Whether the call is done from GUI scope. You may not do everything when not in GUI scope. See #InvalidateWindowData() for details.
  *
- * All of theese parameters should be passed straight from the parrent's window's OnInvalidateData
+ * All of these parameters should be passed straight from the parent's window's OnInvalidateData
  * Event handler, without any changes, or conditional checks
  *
  * @see Window::OnInvalidateData()
@@ -178,7 +178,7 @@ void SelectorWidget::OnInvalidateData([[maybe_unused]] int data, bool gui_scope)
 
 /**
  * Selector widget's UpdateWidgetSize method
- * This function is ment to be called from the parrent's window's UpdateWidgetSize method
+ * This function is meant to be called from the parent's window's UpdateWidgetSize method
  *
  * @param widget  Widget number.
  * @param[in,out] size Size of the widget.
@@ -186,7 +186,7 @@ void SelectorWidget::OnInvalidateData([[maybe_unused]] int data, bool gui_scope)
  * @param[in,out] fill Fill step of the widget.
  * @param[in,out] resize Resize step of the widget.
  *
- * All of theese parameters should be passed straight from the parrent's window's UpdateWidgetSize
+ * All of these parameters should be passed straight from the parent's window's UpdateWidgetSize
  * method, without any changes, or conditional checks.
  *
  * @see Window::UpdateWidgetSize()
@@ -205,10 +205,10 @@ void SelectorWidget::UpdateWidgetSize(WidgetID widget, Dimension &size, const Di
 
 /**
  * Selector widget's OnResize event handler
- * This function is ment to be called from the parrent's window's OnResize
+ * This function is meant to be called from the parent's window's OnResize
  * Event handler
  *
- * All of theese parameters should be passed straight from the parrent's window's OnResize
+ * All of these parameters should be passed straight from the parent's window's OnResize
  * Event handler, without any changes, or conditional checks
  *
  * @see Window::OnResize()
@@ -220,12 +220,12 @@ void SelectorWidget::OnResize()
 
 /**
  * Selector widget's OnEditboxChanged event handler
- * This function is ment to be called from the parrent's window's OnEditboxChanged
+ * This function is meant to be called from the parent's window's OnEditboxChanged
  * Event handler
  *
  * @param wid The widget id of the editbox
  *
- * All of theese parameters should be passed straight from the parrent's window's OnEditboxChanged
+ * All of these parameters should be passed straight from the parent's window's OnEditboxChanged
  * Event handler, without any changes, or conditional checks
  *
  * @see Window::OnEditboxChanged()
@@ -242,7 +242,7 @@ void SelectorWidget::OnEditboxChanged(WidgetID wid)
 
 /**
  * Selector widget's DrawWidget method
- * This function is ment to be called from the parrent's window's DrawWidget
+ * This function is meant to be called from the parent's window's DrawWidget
  * method
  *
  * @param widget  Widget number.
@@ -251,7 +251,7 @@ void SelectorWidget::OnEditboxChanged(WidgetID wid)
  * @param[in,out] fill Fill step of the widget.
  * @param[in,out] resize Resize step of the widget.
  *
- * All of theese parameters should be passed straight from the parrent's window's DrawWidget
+ * All of these parameters should be passed straight from the parent's window's DrawWidget
  * Event handler, without any changes, or conditional checks
  *
  * This function calls a profile defined function this->profile.DrawSection(),
@@ -284,7 +284,7 @@ void SelectorWidget::DrawWidget(const Rect &r, WidgetID widget)
 }
 
 /**
- * This function is one of the possible functions ment to be used as part of the DrawWidget::Profile
+ * This function is one of the possible functions meant to be used as part of the DrawWidget::Profile
  * It draws "section" (line) of the scrollable list
  * @param wid The current SelectionWidget object pointer
  * @param id the "id" of the item to be drawn, can mean different things depending on the profile
@@ -315,7 +315,7 @@ void DrawSectionCompany(SelectorWidget *wid, int id, const Rect &r)
 }
 
 /**
- * This function is one of the possible functions ment to be used as part of the DrawWidget::Profile
+ * This function is one of the possible functions meant to be used as part of the DrawWidget::Profile
  * It draws "section" (line) of the scrollable list
  * @param wid The current SelectionWidget object pointer
  * @param id the "id" of the item to be drawn, can mean different things depending on the profile
@@ -356,7 +356,7 @@ static void DrawSectionCargo(SelectorWidget *wid, int id, const Rect &r)
 
 
 /**
- * This function is one of the possible functions ment to be used as part of the DrawWidget::Profile
+ * This function is one of the possible functions meant to be used as part of the DrawWidget::Profile
  * It repopulates the list that the widget uses to keep track of different selectable items
  * @param wid The current SelectionWidget object pointer
  * @see SelectorWidget::RebuildList()
@@ -381,7 +381,7 @@ static void RebuildListCompany(SelectorWidget *wid) {
 }
 
 /**
- * This function is one of the possible functions ment to be used as part of the DrawWidget::Profile
+ * This function is one of the possible functions meant to be used as part of the DrawWidget::Profile
  * It repopulates the list that the widget uses to keep track of different selectable items
  * @param wid The current SelectionWidget object pointer
  * @see SelectorWidget::RebuildList()
