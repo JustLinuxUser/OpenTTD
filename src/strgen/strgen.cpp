@@ -108,11 +108,11 @@ void FileStringReader::HandlePragma(char *str)
 	if (!memcmp(str, "id ", 3)) {
 		this->data.next_string_id = std::strtoul(str + 3, nullptr, 0);
 	} else if (!memcmp(str, "name ", 5)) {
-		strecpy(_lang.name, str + 5, lastof(_lang.name));
+		strecpy(_lang.name, str + 5);
 	} else if (!memcmp(str, "ownname ", 8)) {
-		strecpy(_lang.own_name, str + 8, lastof(_lang.own_name));
+		strecpy(_lang.own_name, str + 8);
 	} else if (!memcmp(str, "isocode ", 8)) {
-		strecpy(_lang.isocode, str + 8, lastof(_lang.isocode));
+		strecpy(_lang.isocode, str + 8);
 	} else if (!memcmp(str, "textdir ", 8)) {
 		if (!memcmp(str + 8, "ltr", 3)) {
 			_lang.text_dir = TD_LTR;
@@ -123,13 +123,13 @@ void FileStringReader::HandlePragma(char *str)
 		}
 	} else if (!memcmp(str, "digitsep ", 9)) {
 		str += 9;
-		strecpy(_lang.digit_group_separator, strcmp(str, "{NBSP}") == 0 ? NBSP : str, lastof(_lang.digit_group_separator));
+		strecpy(_lang.digit_group_separator, strcmp(str, "{NBSP}") == 0 ? NBSP : str);
 	} else if (!memcmp(str, "digitsepcur ", 12)) {
 		str += 12;
-		strecpy(_lang.digit_group_separator_currency, strcmp(str, "{NBSP}") == 0 ? NBSP : str, lastof(_lang.digit_group_separator_currency));
+		strecpy(_lang.digit_group_separator_currency, strcmp(str, "{NBSP}") == 0 ? NBSP : str);
 	} else if (!memcmp(str, "decimalsep ", 11)) {
 		str += 11;
-		strecpy(_lang.digit_decimal_separator, strcmp(str, "{NBSP}") == 0 ? NBSP : str, lastof(_lang.digit_decimal_separator));
+		strecpy(_lang.digit_decimal_separator, strcmp(str, "{NBSP}") == 0 ? NBSP : str);
 	} else if (!memcmp(str, "winlangid ", 10)) {
 		const char *buf = str + 10;
 		long langid = std::strtol(buf, nullptr, 16);
@@ -153,7 +153,7 @@ void FileStringReader::HandlePragma(char *str)
 
 			if (s == nullptr) break;
 			if (_lang.num_genders >= MAX_NUM_GENDERS) FatalError("Too many genders, max {}", MAX_NUM_GENDERS);
-			strecpy(_lang.genders[_lang.num_genders], s, lastof(_lang.genders[_lang.num_genders]));
+			strecpy(_lang.genders[_lang.num_genders], s);
 			_lang.num_genders++;
 		}
 	} else if (!memcmp(str, "case ", 5)) {
@@ -165,7 +165,7 @@ void FileStringReader::HandlePragma(char *str)
 
 			if (s == nullptr) break;
 			if (_lang.num_cases >= MAX_NUM_CASES) FatalError("Too many cases, max {}", MAX_NUM_CASES);
-			strecpy(_lang.cases[_lang.num_cases], s, lastof(_lang.cases[_lang.num_cases]));
+			strecpy(_lang.cases[_lang.num_cases], s);
 			_lang.num_cases++;
 		}
 	} else {
@@ -250,8 +250,8 @@ struct HeaderFileWriter : HeaderWriter, FileWriter {
 	{
 		/* Find the plural form with the most amount of cases. */
 		int max_plural_forms = 0;
-		for (uint i = 0; i < lengthof(_plural_forms); i++) {
-			max_plural_forms = std::max(max_plural_forms, _plural_forms[i].plural_count);
+		for (const auto &pf : _plural_forms) {
+			max_plural_forms = std::max(max_plural_forms, pf.plural_count);
 		}
 
 		fmt::print(this->output_stream,
@@ -261,7 +261,7 @@ struct HeaderFileWriter : HeaderWriter, FileWriter {
 			"static const uint LANGUAGE_MAX_PLURAL_FORMS = {};\n"
 			"static const uint LANGUAGE_TOTAL_STRINGS    = {};\n"
 			"\n",
-			data.Version(), lengthof(_plural_forms), max_plural_forms, total_strings
+			data.Version(), std::size(_plural_forms), max_plural_forms, total_strings
 		);
 
 		this->output_stream << "#endif /* TABLE_STRINGS_H */\n";

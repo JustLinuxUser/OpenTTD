@@ -17,7 +17,7 @@
 #include "core/bitmath_func.hpp"
 #include "string_type.h"
 
-char *strecpy(char *dst, const char *src, const char *last) NOACCESS(3);
+void strecpy(std::span<char> dst, std::string_view src);
 
 std::string FormatArrayAsHex(std::span<const uint8_t> data);
 
@@ -27,7 +27,7 @@ void StrMakeValidInPlace(char *str, StringValidationSettings settings = SVS_REPL
 
 bool strtolower(std::string &str, std::string::size_type offs = 0);
 
-[[nodiscard]] bool StrValid(const char *str, const char *last) NOACCESS(2);
+[[nodiscard]] bool StrValid(std::span<const char> str);
 void StrTrimInPlace(std::string &str);
 std::string_view StrTrimView(std::string_view str);
 

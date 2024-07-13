@@ -50,34 +50,27 @@
  * Copies characters from one buffer to another.
  *
  * Copies the source string to the destination buffer with respect of the
- * terminating null-character and the last pointer to the last element in
- * the destination buffer. If the last pointer is set to nullptr no boundary
- * check is performed.
+ * terminating null-character and the size of the destination buffer.
  *
- * @note usage: strecpy(dst, src, lastof(dst));
- * @note lastof() applies only to fixed size arrays
+ * @note usage: strecpy(dst, src);
  *
  * @param dst The destination buffer
  * @param src The buffer containing the string to copy
- * @param last The pointer to the last element of the destination buffer
- * @return The pointer to the terminating null-character in the destination buffer
  */
-char *strecpy(char *dst, const char *src, const char *last)
+void strecpy(std::span<char> dst, std::string_view src)
 {
-	assert(dst <= last);
-	while (dst != last && *src != '\0') {
-		*dst++ = *src++;
-	}
-	*dst = '\0';
-
-	if (dst == last && *src != '\0') {
+	/* Ensure source string fits with NUL terminator; dst must be at least 1 character longer than src. */
+	if (std::empty(dst) || std::size(src) >= std::size(dst) - 1U) {
 #if defined(STRGEN) || defined(SETTINGSGEN)
 		FatalError("String too long for destination buffer");
 #else /* STRGEN || SETTINGSGEN */
 		Debug(misc, 0, "String too long for destination buffer");
+		src = src.substr(0, std::size(dst) - 1U);
 #endif /* STRGEN || SETTINGSGEN */
 	}
-	return dst;
+
+	auto it = std::copy(std::begin(src), std::end(src), std::begin(dst));
+	*it = '\0';
 }
 
 /**
@@ -226,32 +219,35 @@ std::string StrMakeValid(std::string_view str, StringValidationSettings settings
 /**
  * Checks whether the given string is valid, i.e. contains only
  * valid (printable) characters and is properly terminated.
- * @param str  The string to validate.
- * @param last The last character of the string, i.e. the string
- *             must be terminated here or earlier.
+ * @note std::span is used instead of std::string_view as we are validating fixed-length string buffers, and
+ * std::string_view's constructor will assume a C-string that ends with a NUL terminator, which is one of the things
+ * we are checking.
+ * @param str Span of chars to validate.
  */
-bool StrValid(const char *str, const char *last)
+bool StrValid(std::span<const char> str)
 {
 	/* Assume the ABSOLUTE WORST to be in str as it comes from the outside. */
+	auto it = std::begin(str);
+	auto last = std::prev(std::end(str));
 
-	while (str <= last && *str != '\0') {
-		size_t len = Utf8EncodedCharLen(*str);
+	while (it <= last && *it != '\0') {
+		size_t len = Utf8EncodedCharLen(*it);
 		/* Encoded length is 0 if the character isn't known.
 		 * The length check is needed to prevent Utf8Decode to read
 		 * over the terminating '\0' if that happens to be placed
 		 * within the encoding of an UTF8 character. */
-		if (len == 0 || str + len > last) return false;
+		if (len == 0 || it + len > last) return false;
 
 		char32_t c;
-		len = Utf8Decode(&c, str);
+		len = Utf8Decode(&c, &*it);
 		if (!IsPrintable(c) || (c >= SCC_SPRITE_START && c <= SCC_SPRITE_END)) {
 			return false;
 		}
 
-		str += len;
+		it += len;
 	}
 
-	return *str == '\0';
+	return *it == '\0';
 }
 
 /**
